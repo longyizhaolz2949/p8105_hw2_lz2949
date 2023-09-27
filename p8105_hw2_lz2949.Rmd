@@ -1,0 +1,17 @@
+---
+title: "p8105_hw2_lz2949"
+author: "Longyi Zhao"
+date: "2023-09-27"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+```
+
+import data
+```{r}
+pols_df = 
+  read_csv("./data/pols-month.csv") 
+```
+
