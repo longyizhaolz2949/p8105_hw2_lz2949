@@ -410,6 +410,71 @@ display: none;
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <p>clean data in snp.csv</p>
+<pre class="r"><code>snp_df = 
+  read_csv(&quot;./data/snp.csv&quot;) |&gt;
+  janitor::clean_names() |&gt; 
+  separate(date, into = c(&quot;month&quot;, &quot;day&quot;, &quot;year&quot;), sep = &quot;/&quot;) |&gt; # drop day
+  subset(select = -day) |&gt;
+  mutate (
+    month = 
+    case_match(
+      month, 
+      &quot;1&quot; ~ &quot;January&quot;,
+      &quot;2&quot; ~ &quot;Febuary&quot;,
+      &quot;3&quot; ~ &quot;March&quot;,
+      &quot;4&quot; ~ &quot;April&quot;, 
+      &quot;5&quot; ~ &quot;May&quot;,
+      &quot;6&quot; ~ &quot;June&quot;,
+      &quot;7&quot; ~ &quot;July&quot;,
+      &quot;8&quot; ~ &quot;August&quot;,
+      &quot;9&quot; ~ &quot;September&quot;,
+      &quot;10&quot; ~ &quot;October&quot;,
+      &quot;11&quot; ~ &quot;November&quot;,
+      &quot;12&quot; ~ &quot;December&quot;,
+    ))</code></pre>
+<pre><code>## Rows: 787 Columns: 2
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (1): date
+## dbl (1): close
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>  # add 19 when num(year) is greater than 19, else add 20
+snp_df$year = ifelse(as.numeric(snp_df$year)&gt;= 50, paste0(&quot;19&quot;,snp_df$year), paste0(&quot;20&quot;, snp_df$year))
+# switch the order between year and month 
+snp_df = snp_df[, c(&quot;year&quot;, &quot;month&quot;, &quot;close&quot;)]</code></pre>
+<p>tidy up unemployment data</p>
+<pre class="r"><code>unemp_df = 
+  read_csv(&quot;./data/unemployment.csv&quot;) |&gt;
+  janitor::clean_names() |&gt; # switching from wide to long 
+  pivot_longer(jan:dec,
+               names_to = &quot;month&quot;,
+               values_to = &quot;unemployment rate&quot;) |&gt;
+  mutate (
+    month = 
+    case_match(
+      month, 
+      &quot;jan&quot; ~ &quot;January&quot;,
+      &quot;feb&quot; ~ &quot;Febuary&quot;,
+      &quot;mar&quot; ~ &quot;March&quot;,
+      &quot;apr&quot; ~ &quot;April&quot;, 
+      &quot;may&quot; ~ &quot;May&quot;,
+      &quot;jun&quot; ~ &quot;June&quot;,
+      &quot;jul&quot; ~ &quot;July&quot;,
+      &quot;aug&quot; ~ &quot;August&quot;,
+      &quot;sep&quot; ~ &quot;September&quot;,
+      &quot;oct&quot; ~ &quot;October&quot;,
+      &quot;nov&quot; ~ &quot;November&quot;,
+      &quot;dec&quot; ~ &quot;December&quot;,
+    ))</code></pre>
+<pre><code>## Rows: 68 Columns: 13
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## dbl (13): Year, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
 
 

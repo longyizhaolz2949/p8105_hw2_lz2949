@@ -45,4 +45,59 @@ pols_df =
 ```
 
 clean data in snp.csv
+```{r}
+snp_df = 
+  read_csv("./data/snp.csv") |>
+  janitor::clean_names() |> 
+  separate(date, into = c("month", "day", "year"), sep = "/") |> # drop day
+  subset(select = -day) |>
+  mutate (
+    month = 
+    case_match(
+      month, 
+      "1" ~ "January",
+      "2" ~ "Febuary",
+      "3" ~ "March",
+      "4" ~ "April", 
+      "5" ~ "May",
+      "6" ~ "June",
+      "7" ~ "July",
+      "8" ~ "August",
+      "9" ~ "September",
+      "10" ~ "October",
+      "11" ~ "November",
+      "12" ~ "December",
+    ))
+  # add 19 when num(year) is greater than 19, else add 20
+snp_df$year = ifelse(as.numeric(snp_df$year)>= 50, paste0("19",snp_df$year), paste0("20", snp_df$year))
+# switch the order between year and month 
+snp_df = snp_df[, c("year", "month", "close")]
+```
+
+tidy up unemployment data 
+```{r}
+unemp_df = 
+  read_csv("./data/unemployment.csv") |>
+  janitor::clean_names() |> # switching from wide to long 
+  pivot_longer(jan:dec,
+               names_to = "month",
+               values_to = "unemployment rate") |>
+  mutate (
+    month = 
+    case_match(
+      month, 
+      "jan" ~ "January",
+      "feb" ~ "Febuary",
+      "mar" ~ "March",
+      "apr" ~ "April", 
+      "may" ~ "May",
+      "jun" ~ "June",
+      "jul" ~ "July",
+      "aug" ~ "August",
+      "sep" ~ "September",
+      "oct" ~ "October",
+      "nov" ~ "November",
+      "dec" ~ "December",
+    ))
+```
 
