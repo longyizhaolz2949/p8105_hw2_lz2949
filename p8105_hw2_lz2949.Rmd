@@ -118,8 +118,21 @@ write a short paragraph about these datasets. explain briefly what each dataset 
 
 ## Problem 2
 
+```{r}
+library(readxl) # read Mr. Trash Wheel data
+MtrashW_df = 
+  read_excel("./data/202207 Trash Wheel Collection Data.xlsx", sheet = "Mr. Trash Wheel") |>
+  janitor::clean_names() |>
+  subset(select = -c(date, x15, x16, dumpster)) |> # update homes_powerd
+  mutate(
+    homes_powered = (
+      weight_tons*500/30
+    )
+  )
 
+```
 
+use similar process to import, clean, and organize data for Professor Trash Wheel and Gwynnda. combine these with Mr. Trash Wheel. 
 
 
 
