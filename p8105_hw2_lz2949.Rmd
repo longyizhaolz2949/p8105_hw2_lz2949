@@ -2,7 +2,7 @@
 title: "p8105_hw2_lz2949"
 author: "Longyi Zhao"
 date: "2023-09-27"
-output: html_document
+output: github_document
 ---
 
 ```{r}
@@ -68,7 +68,7 @@ snp_df =
       "11" ~ "November",
       "12" ~ "December",
     ))
-  # add 19 when num(year) is greater than 19, else add 20
+# add 19 when num(year) is greater than 19, else add 20
 snp_df$year = ifelse(as.numeric(snp_df$year)>= 50, paste0("19",snp_df$year), paste0("20", snp_df$year))
 # switch the order between year and month 
 snp_df = snp_df[, c("year", "month", "close")]
@@ -100,4 +100,7 @@ unemp_df =
       "dec" ~ "December",
     ))
 ```
+
+# join the datasets by merging snp into pols, and merging unemployment into results
+
 
