@@ -224,10 +224,15 @@ comment
 combine two dataset so who appear in both datasets are retained 
 
 ```{r}
-m_amybase = merge(amyloid_df, baseline_df, by = "id")
+m_amybase = merge(c_baseline_df, amyloid_df, by = "id")
 ```
 
 comments
+
+export combined dataset as CSV to the data_mci directory
+```{r}
+write_csv(m_amybase, "data_mci/m_amybase.csv")
+```
 
 
 
