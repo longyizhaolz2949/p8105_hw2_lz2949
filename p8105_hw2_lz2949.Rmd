@@ -163,7 +163,7 @@ Gwynnda_df =
 Gwynnda_df$Name = "Gwynnda Trash Wheel"
 ```
 
-Combine these two dataset with Mr. Trash Wheel. Use the bind_rows ?
+Combine these two dataset with Mr. Trash Wheel. 
 
 ```{r}
 trash_tidy = 
@@ -173,7 +173,10 @@ trash_tidy =
 trash_tidy = trash_tidy[, c("name", setdiff(names(trash_tidy), "name"))]
 ```
 
-write a paragraph about these data
+Description: There are three datasets in this problem. The first one is called Mr. Trash Wheel, it has `r length(names(MtrashW_df))` variables and it includes data of `r nrow(MtrashW_df)` dumpsters. The first one is called Professor Trash Wheel, it has `r length(names(PtrashW_df))` variables and it includes data of `r nrow(PtrashW_df)` dumpsters. Similarly, the third one is called Gwynnda Trash Wheel, it has `r length(names(Gwynnda_df))` variables and it includes data of `r nrow(Gwynnda_df)` dumpsters. Some of their collected trash are `r names(trash_tidy)[8:10]`. 
+
+The total weight of trash collected by Professor Trash Wheel is `r sum(PtrashW_df$weight_tons)` tons. The total number of cigarette butts collected by Gwynnda in July of 2021 is `r sum(subset(Gwynnda_df, month == "July" & year == "2021")$cigarette_butts)`. 
+
 
 ## Problem 3
 
@@ -199,8 +202,10 @@ c_baseline_df = filter(baseline_df, age_at_onset != ".")
 
 ```
 
+Description: To import the baseline dataset, read_csv function is used and skip = 1 is used to skip the explanation line above header. Mutate function is then used to change sex values to male or female and apoe4 values to carrier or non-carrier. Finally, the filter function is used to filter out those who do not have MCI values recorded. 
 
-discuss the important steps in the import process and relevant features of the dataset
+The total number of participants is `r nrow(baseline_df)`. Among those, `r nrow(c_baseline_df)` developed MCI. The average baseline age of those `r nrow(c_baseline_df)` patients are `r round(mean(as.numeric(c_baseline_df$age_at_onset)), digits=2)`. In this study, `r nrow(subset(c_baseline_df, sex == "female" & apoe4 == "APOE4 carrier"))` female patients are apoe4 carrier, which counts for `r round(nrow(subset(c_baseline_df, sex == "female" & apoe4 == "APOE4 carrier"))/nrow(c_baseline_df)*100, digits = 2)`% proportion of total patients. 
+
 
 Import, clean and tidt longitudinally dataset
 
