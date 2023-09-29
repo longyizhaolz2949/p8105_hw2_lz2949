@@ -39,7 +39,9 @@ pols_df =
     case_match(
       prez_gop,
     0 ~ "dem", 
-    1 ~ "gop")
+    1 ~ "gop", 
+    2 ~ "gop"
+    )
   ) |>
   subset(select = -c(day, prez_dem, prez_gop))
 ```
@@ -175,9 +177,42 @@ write a paragraph about these data
 
 ## Problem 3
 
+import, clean, and tidy baseline demographic database
+
+```{r}
+baseline_df = 
+  read_csv("./data_mci/MCI_baseline.csv", skip = 1) |>
+  janitor::clean_names() |> # convert sex/apoe4 from number to name 
+  mutate (
+    sex = case_match(
+      sex,
+      1 ~ "male", 
+      0 ~ "female"
+    ),
+    apoe4 = case_match(
+      apoe4,
+      1 ~ "APOE4 carrier",
+      0 ~ "APOE4 non-carrier"
+    )
+  ) 
+  
+
+```
 
 
+discuss the importatn steps in the import process and relevant features of the dataset
 
+Import, clean and tidt longitudinally dataset
+
+```{r}
+amyloid_df = 
+  read_csv("./data_mci/mci_amyloid.csv", skip = 1) |>
+  janitor::clean_names() 
+```
+
+comment on steps on the import process and features of the dataset
+
+check whether some participants appear in only the baseline or amyloid dataset
 
 
 
