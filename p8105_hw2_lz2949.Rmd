@@ -123,12 +123,14 @@ library(readxl) # read Mr. Trash Wheel data
 MtrashW_df = 
   read_excel("./data/202207 Trash Wheel Collection Data.xlsx", sheet = "Mr. Trash Wheel", range = "A2:N547") |>
   janitor::clean_names() |>
-  subset(select = -c(date, dumpster)) |> # update homes_powerd
   mutate(
     homes_powered = (
       weight_tons*500/30
     )
   )
+
+MtrashW_df$Name = "Mr. Trash Wheel"
+
 
 ```
 
@@ -138,27 +140,41 @@ use similar process to import, clean, and organize data for Professor Trash Whee
 PtrashW_df = 
   read_excel("./data/202207 Trash Wheel Collection Data.xlsx", sheet = "Professor Trash Wheel", range = "A2:M96") |>
   janitor::clean_names() |>
-  subset(select = -c(date,dumpster)) |>
     mutate(
+    year = as.character(year),
     homes_powered = (
       weight_tons*500/30
     )
   )
+PtrashW_df$Name = "Professor Trash Wheel"
 
-# 
+
 Gwynnda_df = 
   read_excel("./data/202207 Trash Wheel Collection Data.xlsx", sheet = "Gwynnda Trash Wheel", range = "A2:K108") |>
   janitor::clean_names() |>
-  subset(select = -c(date,dumpster)) |>
     mutate(
+    year = as.character(year),
     homes_powered = (
       weight_tons*500/30
     )
   )
-
+Gwynnda_df$Name = "Gwynnda Trash Wheel"
 ```
 
-Combine these two dataset with Mr. Trash Wheel.
+Combine these two dataset with Mr. Trash Wheel. Use the bind_rows ?
+
+```{r}
+trash_tidy = 
+  bind_rows (MtrashW_df, PtrashW_df, Gwynnda_df) |>
+  janitor::clean_names() 
+# move trash wheel name to the first column 
+trash_tidy = trash_tidy[, c("name", setdiff(names(trash_tidy), "name"))]
+```
+
+write a paragraph about these data
+
+## Problem 3
+
 
 
 
