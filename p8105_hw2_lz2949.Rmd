@@ -10,7 +10,7 @@ library(tidyverse)
 ```
 
 ## Problem 1
-import data
+Import data
 ```{r}
 pols_df = 
   read_csv("./data/pols-month.csv") |>
@@ -46,7 +46,7 @@ pols_df =
   subset(select = -c(day, prez_dem, prez_gop))
 ```
 
-clean data in snp.csv
+Clean data in snp.csv
 ```{r}
 snp_df = 
   read_csv("./data/snp.csv") |>
@@ -76,7 +76,7 @@ snp_df$year = ifelse(as.numeric(snp_df$year)>= 50, paste0("19",snp_df$year), pas
 snp_df = snp_df[, c("year", "month", "close")]
 ```
 
-tidy up unemployment data 
+Tidy up unemployment data 
 ```{r}
 unemp_df = 
   read_csv("./data/unemployment.csv") |>
@@ -104,9 +104,9 @@ unemp_df =
     ))
 ```
 
-join the datasets by merging snp into pols, and merging unemployment into results
+Join the datasets by merging snp into pols, and merging unemployment into results
 
-left-join snp into pols, then add unemployment data as well
+Left-join snp into pols, then add unemployment data as well
 
 ```{r}
 snp_pols_data = 
@@ -115,8 +115,7 @@ snp_pols_data =
 merged_data = left_join(snp_pols_data, unemp_df, by = c("year", "month"))
 ```
 
-
-write a short paragraph about these datasets. explain briefly what each dataset contained, and describe the resulting dataset (dimention, range of years, names of key variables)
+The merged data has `r nrow(merged_data)` rows and `r ncol(merged_data)` columns. It contains three datasets. The first one is called pols_df, it contains `r nrow(pols_df)` rows and `r ncol(pols_df)` columns data, ranging from `r range(pols_df$year)[1]` to `r range(pols_df$year)[2]`. The data is about number of republican/democratic governors/senators on associated date and whether the president is from republican or democratic. The second one is called snp_df, it contains `r nrow(snp_df)` rows and `r ncol(snp_df)` columns data, ranging from `r range(snp_df$year)[1]` to `r range(snp_df$year)[2]`. It described closing values of the stock index on the associated date. The third dataset is called unemp_df, it contains `r nrow(unemp_df)` rows and `r ncol(unemp_df)` columns data, ranging from `r range(unemp_df$year)[1]` to `r range(unemp_df$year)[2]`. It described the percentage of unemployment in given month-year. 
 
 ## Problem 2
 
@@ -179,7 +178,7 @@ The total weight of trash collected by Professor Trash Wheel is `r sum(PtrashW_d
 
 ## Problem 3
 
-import, clean, and tidy baseline demographic database
+Import, clean, and tidy baseline demographic database
 
 ```{r}
 baseline_df = 
