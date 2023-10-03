@@ -122,7 +122,7 @@ The merged data has `r nrow(merged_data)` rows and `r ncol(merged_data)` columns
 ```{r}
 library(readxl) # read Mr. Trash Wheel data
 MtrashW_df = 
-  read_excel("./data/202309 Trash Wheel Collection Data.xlsx", sheet = "Mr. Trash Wheel", range = "A2:N547") |>
+  read_excel("./data/202309 Trash Wheel Collection Data.xlsx", sheet = "Mr. Trash Wheel", range = "A2:N586") |>
   janitor::clean_names() |>
   mutate(
     homes_powered = (
@@ -138,7 +138,7 @@ MtrashW_df$Name = "Mr. Trash Wheel"
 
 ```{r}
 PtrashW_df = 
-  read_excel("./data/202309 Trash Wheel Collection Data.xlsx", sheet = "Professor Trash Wheel", range = "A2:M96") |>
+  read_excel("./data/202309 Trash Wheel Collection Data.xlsx", sheet = "Professor Trash Wheel", range = "A2:M108") |>
   janitor::clean_names() |>
     mutate(
     year = as.character(year),
@@ -150,7 +150,7 @@ PtrashW_df$Name = "Professor Trash Wheel"
 
 
 Gwynnda_df = 
-  read_excel("./data/202309 Trash Wheel Collection Data.xlsx", sheet = "Gwynnda Trash Wheel", range = "A2:K108") |>
+  read_excel("./data/202309 Trash Wheel Collection Data.xlsx", sheet = "Gwynnda Trash Wheel", range = "A2:L157") |>
   janitor::clean_names() |>
     mutate(
     year = as.character(year),
@@ -171,7 +171,7 @@ trash_tidy =
 trash_tidy = trash_tidy[, c("name", setdiff(names(trash_tidy), "name"))]
 ```
 
-There are three datasets in this problem. The first one is called Mr. Trash Wheel, it has `r length(names(MtrashW_df))` variables and it includes data of `r nrow(MtrashW_df)` dumpsters. The first one is called Professor Trash Wheel, it has `r length(names(PtrashW_df))` variables and it includes data of `r nrow(PtrashW_df)` dumpsters. Similarly, the third one is called Gwynnda Trash Wheel, it has `r length(names(Gwynnda_df))` variables and it includes data of `r nrow(Gwynnda_df)` dumpsters. Some of their collected trash are `r names(trash_tidy)[8:10]`. 
+There are three datasets in this problem. The first one is called Mr. Trash Wheel, it has `r length(names(MtrashW_df))` variables and it includes data of `r nrow(MtrashW_df)` dumpsters, ranging from `r range(MtrashW_df$year)[1]` to `r range(MtrashW_df$year)[2]`. The second one is called Professor Trash Wheel, it has `r length(names(PtrashW_df))` variables and it includes data of `r nrow(PtrashW_df)` dumpsters, ranging from `r range(PtrashW_df$year)[1]` to `r range(PtrashW_df$year)[2]`. Similarly, the third one is called Gwynnda Trash Wheel, it has `r length(names(Gwynnda_df))` variables and it includes data of `r nrow(Gwynnda_df)` dumpsters, ranging from `r range(Gwynnda_df$year)[1]` to `r range(Gwynnda_df$year)[2]`. Some of their collected trash are `r names(trash_tidy)[8:10]`. 
 
 The total weight of trash collected by Professor Trash Wheel is `r sum(PtrashW_df$weight_tons)` tons. The total number of cigarette butts collected by Gwynnda in July of 2021 is `r sum(subset(Gwynnda_df, month == "July" & year == "2021")$cigarette_butts)`. 
 
@@ -202,7 +202,7 @@ c_baseline_df = filter(baseline_df, age_at_onset != ".")
 
 Description: To import the baseline dataset, read_csv function is used and skip = 1 is used to skip the explanation line above header. Mutate function is then used to change sex values to male or female and apoe4 values to carrier or non-carrier. Finally, the filter function is used to filter out those who do not have MCI values recorded. 
 
-The total number of participants is `r nrow(baseline_df)`. Among those, `r nrow(c_baseline_df)` developed MCI. The average baseline age of those `r nrow(c_baseline_df)` patients are `r round(mean(as.numeric(c_baseline_df$age_at_onset)), digits=2)`. In this study, `r nrow(subset(c_baseline_df, sex == "female" & apoe4 == "APOE4 carrier"))` female patients are apoe4 carrier, which counts for `r round(nrow(subset(c_baseline_df, sex == "female" & apoe4 == "APOE4 carrier"))/nrow(c_baseline_df)*100, digits = 2)`% proportion of total patients. 
+The total number of participants is `r nrow(baseline_df)`. Among those, `r nrow(c_baseline_df)` developed MCI. The average baseline age of those `r nrow(c_baseline_df)` patients is `r round(mean(as.numeric(c_baseline_df$age_at_onset)), digits=2)`. In this study, `r nrow(subset(c_baseline_df, sex == "female" & apoe4 == "APOE4 carrier"))` female patients are apoe4 carrier, which counts for `r round(nrow(subset(c_baseline_df, sex == "female" & apoe4 == "APOE4 carrier"))/nrow(c_baseline_df)*100, digits = 2)`% proportion of total patients. 
 
 
 Import, clean and tidy longitudinally dataset
