@@ -122,7 +122,7 @@ The merged data has `r nrow(merged_data)` rows and `r ncol(merged_data)` columns
 ```{r}
 library(readxl) # read Mr. Trash Wheel data
 MtrashW_df = 
-  read_excel("./data/202207 Trash Wheel Collection Data.xlsx", sheet = "Mr. Trash Wheel", range = "A2:N547") |>
+  read_excel("./data/202309 Trash Wheel Collection Data.xlsx", sheet = "Mr. Trash Wheel", range = "A2:N547") |>
   janitor::clean_names() |>
   mutate(
     homes_powered = (
@@ -138,7 +138,7 @@ MtrashW_df$Name = "Mr. Trash Wheel"
 
 ```{r}
 PtrashW_df = 
-  read_excel("./data/202207 Trash Wheel Collection Data.xlsx", sheet = "Professor Trash Wheel", range = "A2:M96") |>
+  read_excel("./data/202309 Trash Wheel Collection Data.xlsx", sheet = "Professor Trash Wheel", range = "A2:M96") |>
   janitor::clean_names() |>
     mutate(
     year = as.character(year),
@@ -150,7 +150,7 @@ PtrashW_df$Name = "Professor Trash Wheel"
 
 
 Gwynnda_df = 
-  read_excel("./data/202207 Trash Wheel Collection Data.xlsx", sheet = "Gwynnda Trash Wheel", range = "A2:K108") |>
+  read_excel("./data/202309 Trash Wheel Collection Data.xlsx", sheet = "Gwynnda Trash Wheel", range = "A2:K108") |>
   janitor::clean_names() |>
     mutate(
     year = as.character(year),
