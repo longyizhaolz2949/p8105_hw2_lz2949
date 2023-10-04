@@ -230,18 +230,17 @@ Pivot longer is then used to make the data looks more tidy.
 The Amyloid dataset contains time (in years) elapsed since the study baseline to the visit where biomarker Amyloid: 42/40 ratio was measured. There are total `r as.numeric(nrow(amyloid_df))/5` patients being measured. 
 
 ```{r}
-same_id_baseline = sum(baseline_df$id %in% amyloid_df$id) # check the number of id in baseline apper in amyloid
-same_id_c_baseline = sum(c_baseline_df$id %in% amyloid_df$id)
+same_id_baseline = sum(c_baseline_df$id %in% amyloid_df$id) # check the number of id in baseline apper in amyloid
 ```
 
-In amyloid and baseline datasets, `r same_id_baseline` appeared in both, some of them are healthy while `r same_id_c_baseline` of them developed MCI later. 
+In amyloid and baseline datasets, `r same_id_baseline` appeared in both datasets.
 
 Combine two dataset so who appear in both datasets are retained 
 ```{r}
 m_amybase = merge(c_baseline_df, amyloid_df, by = "id")
 ```
 
-Values from two datasets of those `r same_id_c_baseline` patients are combined. `r nrow(subset(m_amybase, sex == "female"))` of them are female and `r nrow(subset(m_amybase, sex == "male"))` of them are male. `r nrow(subset(m_amybase, sex == "male" & apoe4 == "APOE4 carrier"))` males are APOE4 carriers and `r nrow(subset(m_amybase, sex == "female" & apoe4 == "APOE4 carrier"))` females are APOE4 carriers. 
+Values from two datasets of those `r same_id_baseline` patients are combined. `r nrow(subset(m_amybase, sex == "female"))/5` of them are female and `r nrow(subset(m_amybase, sex == "male"))/5` of them are male. `r nrow(subset(m_amybase, sex == "male" & apoe4 == "APOE4 carrier"))/5` males are APOE4 carriers and `r nrow(subset(m_amybase, sex == "female" & apoe4 == "APOE4 carrier"))/5` females are APOE4 carriers. 
 
 Export combined dataset as CSV to the data_mci directory
 ```{r}
