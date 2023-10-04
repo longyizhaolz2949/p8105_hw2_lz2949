@@ -195,18 +195,18 @@ mutate (
       1 ~ "APOE4 carrier",
       0 ~ "APOE4 non-carrier"
     )
-  )  # remove participants without MCI value
-c_baseline_df = filter(baseline_df, age_at_onset != ".")
-
+  ) # people who develop MCI should not have MCI at the begining 
+c_baseline_df = filter(baseline_df, age_at_onset > current_age | age_at_onset == ".")
 ```
 
 Description: To import the baseline dataset, read_csv function is used and skip = 1 is used to skip the explanation line above header. Mutate function is then used to change sex values to male or female and apoe4 values to carrier or non-carrier. Finally, the filter function is used to filter out those who do not have MCI values recorded. 
 
-The total number of participants is `r nrow(baseline_df)`. Among those, `r nrow(c_baseline_df)` developed MCI. The average baseline age of those `r nrow(c_baseline_df)` patients is `r round(mean(as.numeric(c_baseline_df$age_at_onset)), digits=2)`. In this study, `r nrow(subset(c_baseline_df, sex == "female" & apoe4 == "APOE4 carrier"))` female patients are apoe4 carrier, which counts for `r round(nrow(subset(c_baseline_df, sex == "female" & apoe4 == "APOE4 carrier"))/nrow(c_baseline_df)*100, digits = 2)`% proportion of total patients. 
+The total number of participants is `r nrow(baseline_df)`. Among those, `r nrow(c_baseline_df)` does not have MCI at the begining of the study. Later, `r nrow(filter(c_baseline_df, age_at_onset != "."))` developed MCI. The average baseline age of those `r nrow(filter(c_baseline_df, age_at_onset != "."))` patients is `r round(mean(as.numeric(filter(c_baseline_df, age_at_onset != ".")$current_age)), digits = 2)`. 
+
+In this study, `r nrow(subset(c_baseline_df, sex == "female" & apoe4 == "APOE4 carrier"))` female patients are apoe4 carrier, which counts for `r round(nrow(subset(c_baseline_df, sex == "female" & apoe4 == "APOE4 carrier"))/nrow(subset(c_baseline_df, sex == "female"))*100, digits = 2)`% proportion of total female participants meeting the inclusion criteria. 
 
 
-Import, clean and tidy longitudinally dataset
-
+Import, clean and tidy longitudinally dataset. 
 ```{r}
 amyloid_df = 
   read_csv("./data_mci/mci_amyloid.csv", skip = 1) |>
