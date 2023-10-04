@@ -217,6 +217,19 @@ amyloid_df =
 Read_csv is also used to import dataset of longitudinally observed biomarker values. To help the comparison between two datasets easier, the column name study_id is changed to id using rename(). In this longitudinal study, there are total `r nrow(amyloid_df)` participants being traced. 
 
 ```{r}
+amyloid_df = 
+  pivot_longer(
+    amyloid_df, 
+    baseline:time_8, 
+    names_to = "time",
+    values_to = "time_elapse"
+  )
+```
+
+Pivot longer is then used to make the data looks more tidy. 
+The Amyloid dataset contains time (in years) elapsed since the study baseline to the visit where biomarker Amyloid: 42/40 ratio was measured. There are total `r as.numeric(nrow(amyloid_df))/5` patients being measured. 
+
+```{r}
 same_id_baseline = sum(baseline_df$id %in% amyloid_df$id) # check the number of id in baseline apper in amyloid
 same_id_c_baseline = sum(c_baseline_df$id %in% amyloid_df$id)
 ```
