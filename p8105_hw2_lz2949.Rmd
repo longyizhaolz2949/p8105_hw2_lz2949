@@ -241,7 +241,7 @@ library(dplyr)
 m_amybase = inner_join(c_baseline_df, amyloid_df, by = "id")
 ```
 
-Values from two datasets of those `r same_id_baseline` patients are combined. `r nrow(subset(m_amybase, sex == "female"))/5` of them are female and `r nrow(subset(m_amybase, sex == "male"))/5` of them are male. `r nrow(subset(m_amybase, sex == "male" & apoe4 == "APOE4 carrier"))/5` males are APOE4 carriers and `r nrow(subset(m_amybase, sex == "female" & apoe4 == "APOE4 carrier"))/5` females are APOE4 carriers. 
+Values from two datasets of those `r same_id_baseline` patients are combined, there are total `r nrow(m_amybase)` observations: `r nrow(subset(m_amybase, sex == "female"))/5` of them are female and `r nrow(subset(m_amybase, sex == "male"))/5` of them are male. `r nrow(subset(m_amybase, sex == "male" & apoe4 == "APOE4 carrier"))/5` males are APOE4 carriers and `r nrow(subset(m_amybase, sex == "female" & apoe4 == "APOE4 carrier"))/5` females are APOE4 carriers. 
 
 Export combined dataset as CSV to the data_mci directory
 ```{r}
