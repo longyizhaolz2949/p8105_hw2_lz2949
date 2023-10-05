@@ -233,7 +233,7 @@ The Amyloid dataset contains time (in years) elapsed since the study baseline to
 same_id_baseline = sum(c_baseline_df$id %in% amyloid_df$id) # check the number of id in baseline apper in amyloid
 ```
 
-In amyloid and baseline datasets, `r same_id_baseline` appeared in both datasets.
+In amyloid and baseline datasets, `r same_id_baseline` appeared in both datasets which means `r as.numeric(nrow(amyloid_df))/5-same_id_baseline` participants only appeared in amyloid. 
 
 Combine two dataset so who appear in both datasets are retained 
 ```{r}
